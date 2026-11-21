@@ -30,6 +30,8 @@ docx는 단락으로 split을 하기 때문에 유리하다.
 - langchain-hub
     - 프롬프트를 많이 모아둠
     - 챗 프롬프트 템플릿을 가지고 있다.
+    - 현재는 langsmith 으로 옮겨졌다.
+    - 기존 langchainhub 패키지는 deprecated 상태이다.
 
 langchain.chains RetrievalQA
     - qa_chain = RetrievalQA.from_chain_type(llm, database.as_retriever(), chain_type_kwargs={"prompt: prompt}) 
@@ -101,3 +103,20 @@ ai_res = tax_chain.invoke({"question" : query})
     - system : text
     - human : text
 - 무작정 예제를 많이 넣지 말고 1개씩 늘려보면서 깎는게 중요함.
+
+# LLM Evaluation
+- LangSmith로 질문 목록과 답변 상세 데이터를 보며 지속적으로 유지보수 할 수 있도록 기능을 제공한다.
+- 서비스를 안정적으로 운영하기 위해서 사용한다.
+- 사용자가 정확한 정보를 받을 수 있는지 검사한다.
+- LLM이 잘못된 정보, 할루시네이션을 방지하기 위해 사용한다.
+- cost, answer socre, 할루시네이션 score 등을 확인할 수 있다.
+- 예를들어 답변 평가자, 답변 도움 평가자(helpulness_evaluator) 등을 만들어 평가를 시킬 수 있다.
+
+### Dataset
+- 도메인 전문가가 작성한 정답지이다.
+
+# LangSmith 란 ?
+- 요청 하나가 내부에서 어떻게 처리됐는지 단계별로 추적하고 품질을 평가하는 플랫폼이다.
+- RAG 챗봇에서 틀린 답이 나왔을 때 일반 로그만으로는 원인을 알기 어렵다. 검색이 엉뚱한 청크를 가져왔는지,  
+  청크는 맞는데 프롬프트가 문제였는지, 모델이 무시했는지를 구분해야 하는데, 이 중간 과정을 보여 주는 도구가 LangSmith이다.
+- 
